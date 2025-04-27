@@ -226,7 +226,7 @@ section {
 }
 
 .header .header-1 {
-   background-color: var(--light-bg);
+   background-color: #ece5d8;
 }
 
 .header .header-1 .flex {
@@ -268,37 +268,90 @@ section {
 }
 
 .header .header-1 .flex .share a:hover {
-   color: var(--purple);
+   color: var(--black);
 }
 
 .header .header-1 .flex p {
    font-size: 2rem;
-   color: var(--light-color);
+   color: var(--black);
 }
 
 .header .header-1 .flex p a {
-   color: var(--purple);
+   color: #321b15;
+   text-transform: uppercase;
+   position: relative;
+   transition: color 0.4s ease, text-shadow 0.4s ease;
 }
 
 .header .header-1 .flex p a:hover {
-   text-decoration: underline;
+   color: #3b3c36; 
+   text-shadow: 0 0 8px rgba(59, 60, 54, 0.7); /* Glow tipis elegan */
 }
+
+/* Fancy Underline Effect */
+.header .header-1 .flex p a::after {
+   content: '';
+   position: absolute;
+   left: 0;
+   bottom: -3px;
+   width: 0;
+   height: 2px;
+   background-color: #3b3c36;
+   transition: width 0.4s ease;
+}
+
+.header .header-1 .flex p a:hover::after {
+   width: 100%; /* underline smooth muncul */
+}
+
 
 .header .header-2 .flex .logo {
    font-size: 2.5rem;
    color: var(--purple);
 }
 
+/* Navbar Links */
 .header .header-2 .flex .navbar a {
+   position: relative;
    margin: 0 1rem;
    font-size: 2rem;
    color: var(--light-color);
+   text-transform: uppercase;
+   letter-spacing: 1px;
+   transition: color 0.3s ease, transform 0.3s ease;
+   padding: 0.5rem 0;
 }
 
+/* Hover Effect */
+.header .header-2 .flex .navbar a::after {
+   content: '';
+   position: absolute;
+   left: 0;
+   bottom: 0;
+   width: 0;
+   height: 2px;
+   background-color: var(--purple);
+   transition: width 0.4s ease;
+}
+
+/* Hover Interaction */
 .header .header-2 .flex .navbar a:hover {
    color: var(--purple);
-   text-decoration: underline;
+   transform: translateY(-3px); /* Sedikit naik pas hover */
 }
+
+.header .header-2 .flex .navbar a:hover::after {
+   width: 100%; /* Underline smooth */
+}
+
+/* Responsive Touch Up */
+@media (max-width: 768px) {
+   .header .header-2 .flex .navbar a {
+      font-size: 1.8rem;
+      margin: 0 0.8rem;
+   }
+}
+
 
 .header .header-2 .flex .icons>* {
    font-size: 2.5rem;
@@ -347,6 +400,7 @@ section {
 .header .header-2 .flex .user-box .delete-btn {
    margin-top: 0;
 }
+
 /* Home Section */
 .home {
    min-height: 90vh;
@@ -461,6 +515,104 @@ section {
    }
 }
 
+/* promosi */
+.promo-carousel {
+   position: relative;
+   background: linear-gradient(to right, #2e382e, #698485);
+   padding: 5rem 2rem;
+   overflow-x: hidden;
+}
+
+.section-title {
+   text-align: center;
+   font-size: 4rem;
+   color: var(--light-white);
+   margin-bottom: 3rem;
+   text-transform: uppercase;
+   animation: fadeInDown 1s ease forwards;
+}
+.section-title::after {
+   content: '';
+   position: absolute;
+   bottom: -1rem;
+   left: 50%;
+   transform: translateX(-50%);
+   width: 8rem;
+   height: .3rem;
+   background: #50c9ce;
+   border-radius: 10px;
+   animation: shimmer 2s infinite linear;
+} 
+
+.carousel-container {
+   overflow: hidden;
+   position: relative;
+}
+
+.carousel-track {
+   display: flex;
+   gap: 2rem;
+   will-change: transform;
+   animation: scrollCarousel 30s linear infinite;
+}
+
+.carousel-item {
+   flex: 0 0 auto;
+   width: 300px;
+   height: 400px;
+   background: var(--light-bg);
+   border-radius: 1.5rem;
+   overflow: hidden;
+   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+   transition: transform 0.5s ease;
+   position: relative;
+}
+
+.carousel-item img {
+   width: 100%;
+   height: 100%;
+   object-fit: cover;
+   transition: transform 0.5s ease;
+}
+
+/* Hover Animation */
+.carousel-item:hover img {
+   transform: scale(1.1);
+}
+
+/* Animations */
+@keyframes scrollCarousel {
+   0% {
+      transform: translateX(0);
+   }
+   100% {
+      transform: translateX(-50%);
+   }
+}
+
+@keyframes fadeInDown {
+   0% {
+      opacity: 0;
+      transform: translateY(-50px);
+   }
+   100% {
+      opacity: 1;
+      transform: translateY(0);
+   }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+   .carousel-item {
+      width: 220px;
+      height: 300px;
+   }
+   .section-title {
+      font-size: 3rem;
+   }
+}
+
+
 /* Product Section */
 
 .box-container {
@@ -548,7 +700,7 @@ section {
 
 .products .box-container .box .name {
    font-size: 2rem;
-   color: #f0f4f8;
+   color: var(--black);
    margin: 1rem 0;
    font-weight: 600;
    letter-spacing: 1px;

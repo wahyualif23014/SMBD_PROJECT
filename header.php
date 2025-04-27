@@ -28,7 +28,7 @@ if(isset($message)){
 
    <div class="header-1">
       <div class="flex">
-         <p><a href="login.php">login</a> | <a href="register.php">register</a> </p>
+         <p><a href="login.php">Login</a> | <a href="register.php">Register</a> </p>
       </div>
    </div>
 

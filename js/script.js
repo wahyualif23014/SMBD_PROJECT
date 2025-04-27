@@ -113,5 +113,27 @@ window.addEventListener('load', () => {
    typeWriter(); // Start typing after load
 });
 
+// promosi
+// Pause carousel when hover
+const track = document.querySelector('.carousel-track');
+
+track.addEventListener('mouseenter', () => {
+   track.style.animationPlayState = 'paused';
+});
+
+track.addEventListener('mouseleave', () => {
+   track.style.animationPlayState = 'running';
+});
+
+// Floating Effect on Scroll
+window.addEventListener('scroll', () => {
+   const items = document.querySelectorAll('.carousel-item');
+   const scrollY = window.scrollY;
+
+   items.forEach((item, index) => {
+      item.style.transform = `translateY(${(scrollY * 0.05) * (index % 2 === 0 ? 1 : -1)}px)`;
+   });
+});
+
 
 
