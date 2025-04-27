@@ -10,12 +10,25 @@ if(isset($message)){
    }
 }
 ?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Bookly</title>
 
+   <!-- Link ke file CSS -->
+   <link rel="stylesheet" href="css/style.css">
+
+   <!-- Link ke Font Awesome -->
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
 <header class="header">
 
    <div class="header-1">
       <div class="flex">
-         <p> new <a href="login.php">login</a> | <a href="register.php">register</a> </p>
+         <p><a href="login.php">login</a> | <a href="register.php">register</a> </p>
       </div>
    </div>
 
@@ -51,3 +64,5 @@ if(isset($message)){
    </div>
 
 </header>
+</body>
+</html>

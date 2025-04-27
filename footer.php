@@ -21,9 +21,9 @@
       <div class="box">
          <h3>contact info</h3>
          <p> <i class="fas fa-phone"></i> +123-456-7890 </p>
-         <p> <i class="fas fa-phone"></i> +111-222-3333 </p>
-         <p> <i class="fas fa-envelope"></i> shaikhanas@gmail.com </p>
-         <p> <i class="fas fa-map-marker-alt"></i> mumbai, india - 400104 </p>
+         <p> <i class="fas fa-phone"></i> +62 877 4004 1124 </p>
+         <p> <i class="fas fa-envelope"></i> zexvulca@gmail.com </p>
+         <p> <i class="fas fa-map-marker-alt"></i> madura, indonesia - 400104 </p>
       </div>
 
       <div class="box">
@@ -36,6 +36,6 @@
 
    </div>
 
-   <p class="credit"> &copy; copyright  @ <?php echo date('Y'); ?> by <span>mr. web designer</span> </p>
+   <p class="credit"> &copy; copyright  @ <?php echo date('Y'); ?> by <span>Dewa.fx</span> </p>
 
 </section>
