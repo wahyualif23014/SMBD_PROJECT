@@ -60,30 +60,33 @@ if(isset($_POST['add_to_cart'])){
 </section>
 
 <section class="promo-carousel">
+  <h2 class="section-title">Temukan Buku Favoritmu</h2>
 
-   <h2 class="section-title">Temukan Buku Favoritmu</h2>
-
-   <div class="carousel-container">
-      <div class="carousel-track">
-         <div class="carousel-item">
-            <img src="https://images.unsplash.com/photo-1512820790803-83ca734da794?ixlib=rb-4.0.3&auto=format&fit=crop&w=700&q=80" alt="Book 1">
-         </div>
-         <div class="carousel-item">
-            <img src="https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?ixlib=rb-4.0.3&auto=format&fit=crop&w=700&q=80" alt="Book 2">
-         </div>
-         <div class="carousel-item">
-            <img src="https://images.unsplash.com/photo-1516979187457-637abb4f9353?ixlib=rb-4.0.3&auto=format&fit=crop&w=700&q=80" alt="Book 3">
-         </div>
-         <div class="carousel-item">
-            <img src="https://images.unsplash.com/photo-1544717305-2782549b5136?ixlib=rb-4.0.3&auto=format&fit=crop&w=700&q=80" alt="Book 4">
-         </div>
-         <div class="carousel-item">
-            <img src="https://images.unsplash.com/photo-1544717305-2782549b5136?ixlib=rb-4.0.3&auto=format&fit=crop&w=700&q=80" alt="Book 4">
-         </div>
+  <div class="carousel-container">
+    <div class="carousel-track">
+      <div class="carousel-item" data-title="Book 1">
+        <img src="https://images.unsplash.com/photo-1512820790803-83ca734da794?ixlib=rb-4.0.3&auto=format&fit=crop&w=700&q=80" alt="Book 1">
       </div>
-   </div>
-
+      <div class="carousel-item" data-title="Book 2">
+        <img src="https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?ixlib=rb-4.0.3&auto=format&fit=crop&w=700&q=80" alt="Book 2">
+      </div>
+      <div class="carousel-item" data-title="Book 3">
+        <img src="https://images.unsplash.com/photo-1516979187457-637abb4f9353?ixlib=rb-4.0.3&auto=format&fit=crop&w=700&q=80" alt="Book 3">
+      </div>
+      <div class="carousel-item" data-title="Book 4">
+        <img src="https://images.unsplash.com/photo-1544717305-2782549b5136?ixlib=rb-4.0.3&auto=format&fit=crop&w=700&q=80" alt="Book 4">
+      </div>
+    </div>
+  </div>
 </section>
+
+<!-- Modal Popup -->
+<div class="modal" id="modal">
+  <div class="modal-content">
+    <span id="modal-close">&times;</span>
+    <h3 id="modal-title"></h3>
+  </div>
+</div>
 
 
 

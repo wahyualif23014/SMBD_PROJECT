@@ -114,26 +114,36 @@ window.addEventListener('load', () => {
 });
 
 // promosi
-// Pause carousel when hover
+
+
 const track = document.querySelector('.carousel-track');
+const items = document.querySelectorAll('.carousel-item');
+const modal = document.getElementById('modal');
+const modalTitle = document.getElementById('modal-title');
+const modalClose = document.getElementById('modal-close');
 
-track.addEventListener('mouseenter', () => {
-   track.style.animationPlayState = 'paused';
+// Handle click carousel item
+items.forEach(item => {
+  item.addEventListener('click', () => {
+    // Pause animasi
+    track.style.animationPlayState = 'paused';
+    const title = item.getAttribute('data-title');
+    modalTitle.textContent = title;
+    modal.style.display = 'flex';
+  });
 });
 
-track.addEventListener('mouseleave', () => {
-   track.style.animationPlayState = 'running';
+// Handle close modal
+modalClose.addEventListener('click', closeModal);
+modal.addEventListener('click', (e) => {
+  if (e.target === modal) {
+    closeModal();
+  }
 });
 
-// Floating Effect on Scroll
-window.addEventListener('scroll', () => {
-   const items = document.querySelectorAll('.carousel-item');
-   const scrollY = window.scrollY;
-
-   items.forEach((item, index) => {
-      item.style.transform = `translateY(${(scrollY * 0.05) * (index % 2 === 0 ? 1 : -1)}px)`;
-   });
-});
-
-
+function closeModal() {
+  modal.style.display = 'none';
+  // Resume animasi
+  track.style.animationPlayState = 'running';
+}
 
