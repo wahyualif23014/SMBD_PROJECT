@@ -57,7 +57,7 @@ if(isset($_GET['delete_all'])){
 <section class="shopping-cart">
 
    <h1 class="title">products added</h1>
-
+   <!-- view 6 -->
    <div class="box-container">
       <?php
          $grand_total = 0;

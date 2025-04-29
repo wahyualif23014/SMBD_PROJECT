@@ -62,7 +62,7 @@ if(isset($_POST['add_to_cart'])){
 </section>
 
 <section class="products" style="padding-top: 0;">
-
+   <!-- view 4 -->
    <div class="box-container">
    <?php
       if(isset($_POST['submit'])){

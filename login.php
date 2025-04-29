@@ -4,7 +4,7 @@ include 'config.php';
 session_start();
 
 if(isset($_POST['submit'])){
-
+   // view 3
    $email = mysqli_real_escape_string($conn, $_POST['email']);
    $pass = mysqli_real_escape_string($conn, md5($_POST['password']));
 
