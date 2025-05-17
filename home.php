@@ -13,6 +13,7 @@ if(!isset($user_id)){
 if(isset($_POST['add_to_cart'])){
 
    $product_name = $_POST['product_name'];
+   $product_category = $_POST['product_category'];
    $product_price = $_POST['product_price'];
    $product_image = $_POST['product_image'];
    $product_quantity = $_POST['product_quantity'];
@@ -22,7 +23,7 @@ if(isset($_POST['add_to_cart'])){
    if(mysqli_num_rows($check_cart_numbers) > 0){
       $message[] = 'already added to cart!';
    }else{
-      mysqli_query($conn, "INSERT INTO `cart`(user_id, name, price, quantity, image) VALUES('$user_id', '$product_name', '$product_price', '$product_quantity', '$product_image')") or die('query failed');
+      mysqli_query($conn, "INSERT INTO `cart`(user_id, name, price, quantity, image, category) VALUES('$user_id', '$product_name', '$product_price', '$product_quantity', '$product_image', '$product_category')") or die('query failed');
       $message[] = 'product added to cart!';
    }
 
@@ -104,10 +105,12 @@ if(isset($_POST['add_to_cart'])){
      <form action="" method="post" class="box">
       <img class="image" src="uploaded_img/<?php echo $fetch_products['image']; ?>" alt="">
       <div class="name"><?php echo $fetch_products['name']; ?></div>
+      <div class="category"><?php echo $fetch_products['category']; ?></div>
       <div class="price">$<?php echo $fetch_products['price']; ?>/-</div>
       <input type="number" min="1" name="product_quantity" value="1" class="qty">
       <input type="hidden" name="product_name" value="<?php echo $fetch_products['name']; ?>">
       <input type="hidden" name="product_price" value="<?php echo $fetch_products['price']; ?>">
+      <input type="hidden" name="product_category" value="<?php echo $fetch_products['category']; ?>">
       <input type="hidden" name="product_image" value="<?php echo $fetch_products['image']; ?>">
       <input type="submit" value="add to cart" name="add_to_cart" class="btn">
      </form>
