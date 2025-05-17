@@ -10,35 +10,34 @@ if(!isset($admin_id)){
    header('location:login.php');
 };
 
-if(isset($_POST['add_product'])){
+   if(isset($_POST['add_product'])){
+      $name = mysqli_real_escape_string($conn, $_POST['name']);
+      $price = $_POST['price'];
+      $image = $_FILES['image']['name'];
+      $category = $_POST['category'];
+      $image_size = $_FILES['image']['size'];
+      $image_tmp_name = $_FILES['image']['tmp_name'];
+      $image_folder = 'uploaded_img/'.$image;
 
-   $name = mysqli_real_escape_string($conn, $_POST['name']);
-   $price = $_POST['price'];
-   $image = $_FILES['image']['name'];
+      $select_product_name = mysqli_query($conn, "SELECT name FROM products WHERE name = '$name'") or die('query failed');
 
-   $image_size = $_FILES['image']['size'];
-   $image_tmp_name = $_FILES['image']['tmp_name'];
-   $image_folder = 'uploaded_img/'.$image;
+      if(mysqli_num_rows($select_product_name) > 0){
+         $message[] = 'product name already added';
+      } else {
+         // Panggil stored procedure yang pakai loop 1x
+         $stmt = $conn->prepare("CALL add_product_loop_admin(?, ?, ?, ?)");
+         $stmt->bind_param("sdss", $name, $price, $category, $image);
+         $stmt->execute();
+         $stmt->close();
 
-   $select_product_name = mysqli_query($conn, "SELECT name FROM `products` WHERE name = '$name'") or die('query failed');
-
-   if(mysqli_num_rows($select_product_name) > 0){
-      $message[] = 'product name already added';
-   }else{
-      $add_product_query = mysqli_query($conn, "INSERT INTO `products`(name, price, image) VALUES('$name', '$price', '$image')") or die('query failed');
-
-      if($add_product_query){
          if($image_size > 2000000){
             $message[] = 'image size is too large';
-         }else{
+         } else {
             move_uploaded_file($image_tmp_name, $image_folder);
             $message[] = 'product added successfully!';
          }
-      }else{
-         $message[] = 'product could not be added!';
       }
    }
-}
 
 if(isset($_GET['delete'])){
    $delete_id = $_GET['delete'];

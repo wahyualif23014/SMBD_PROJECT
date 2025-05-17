@@ -10,23 +10,42 @@ if(!isset($user_id)){
    header('location:login.php');
 }
 
+// stored procedure to add product to cart
 if(isset($_POST['add_to_cart'])){
 
-   $product_name = $_POST['product_name'];
-   $product_category = $_POST['product_category'];
-   $product_price = $_POST['product_price'];
-   $product_image = $_POST['product_image'];
-   $product_quantity = $_POST['product_quantity'];
-   // view 1
-   $check_cart_numbers = mysqli_query($conn, "SELECT * FROM `cart` WHERE name = '$product_name' AND user_id = '$user_id'") or die('query failed');
+    $product_name = mysqli_real_escape_string($conn, $_POST['product_name']);
+    $product_price = (int)$_POST['product_price'];
+    $product_quantity = (int)$_POST['product_quantity'];
+    $product_image = mysqli_real_escape_string($conn, $_POST['product_image']);
+    $product_category = mysqli_real_escape_string($conn, $_POST['product_category']);
 
-   if(mysqli_num_rows($check_cart_numbers) > 0){
-      $message[] = 'already added to cart!';
-   }else{
-      mysqli_query($conn, "INSERT INTO `cart`(user_id, name, price, quantity, image, category) VALUES('$user_id', '$product_name', '$product_price', '$product_quantity', '$product_image', '$product_category')") or die('query failed');
-      $message[] = 'product added to cart!';
-   }
+    $user_id = (int)$_SESSION['user_id']; 
 
+    $stmt = $conn->prepare("CALL add_to_cart(?, ?, ?, ?, ?, ?, @message)");
+    
+   
+    $stmt->bind_param("isisss", 
+        $user_id, 
+        $product_name, 
+        $product_price, 
+        $product_quantity, 
+        $product_image, 
+        $product_category
+    );
+
+    if($stmt->execute()){
+        $result = $conn->query("SELECT @message AS message");
+        if ($result) {
+            $message_data = $result->fetch_assoc();
+            $message[] = $message_data['message'];
+        } else {
+            $message[] = "Stored procedure executed, but failed to fetch message.";
+        }
+    } else {
+        $message[] = "Error executing procedure: " . $stmt->error;
+    }
+
+    $stmt->close();
 }
 
 ?>

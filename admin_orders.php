@@ -10,20 +10,28 @@ if(!isset($admin_id)){
    header('location:login.php');
 }
 
+// stored procedure for updating order status
 if(isset($_POST['update_order'])){
-
    $order_update_id = $_POST['order_id'];
    $update_payment = $_POST['update_payment'];
-   mysqli_query($conn, "UPDATE `orders` SET payment_status = '$update_payment' WHERE id = '$order_update_id'") or die('query failed');
-   $message[] = 'payment status has been updated!';
 
+   $stmt = $conn->prepare("CALL update_order_status(?, ?)");
+   $stmt->bind_param("is", $order_update_id, $update_payment);
+   $stmt->execute();
+   $message[] = 'Payment status has been updated!';
+   $stmt->close();
 }
 
+// stored procedure untuk menghapus order di admin
 if(isset($_GET['delete'])){
    $delete_id = $_GET['delete'];
-   mysqli_query($conn, "DELETE FROM `orders` WHERE id = '$delete_id'") or die('query failed');
+   $stmt = $conn->prepare("CALL delete_order_by_id(?)");
+   $stmt->bind_param("i", $delete_id);
+   $stmt->execute();
+   $stmt->close();
    header('location:admin_orders.php');
 }
+
 
 ?>
 
