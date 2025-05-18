@@ -84,21 +84,24 @@ if(isset($_POST['add_to_cart'])){
 
   <div class="carousel-container">
     <div class="carousel-track">
-      <div class="carousel-item" data-title="Book 1">
-        <img src="https://images.unsplash.com/photo-1512820790803-83ca734da794?ixlib=rb-4.0.3&auto=format&fit=crop&w=700&q=80" alt="Book 1">
+      <?php
+        $carousel_query = mysqli_query($conn, "SELECT * FROM view_latest_books") or die('query failed');
+        if(mysqli_num_rows($carousel_query) > 0){
+          while($book = mysqli_fetch_assoc($carousel_query)){
+      ?>
+      <div class="carousel-item" data-title="<?php echo htmlspecialchars($book['name']); ?>">
+        <img src="uploaded_img/<?php echo htmlspecialchars($book['image']); ?>" alt="<?php echo htmlspecialchars($book['name']); ?>">
       </div>
-      <div class="carousel-item" data-title="Book 2">
-        <img src="https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?ixlib=rb-4.0.3&auto=format&fit=crop&w=700&q=80" alt="Book 2">
-      </div>
-      <div class="carousel-item" data-title="Book 3">
-        <img src="https://images.unsplash.com/photo-1516979187457-637abb4f9353?ixlib=rb-4.0.3&auto=format&fit=crop&w=700&q=80" alt="Book 3">
-      </div>
-      <div class="carousel-item" data-title="Book 4">
-        <img src="https://images.unsplash.com/photo-1544717305-2782549b5136?ixlib=rb-4.0.3&auto=format&fit=crop&w=700&q=80" alt="Book 4">
-      </div>
+      <?php
+          }
+        } else {
+          echo '<p class="empty">No books available</p>';
+        }
+      ?>
     </div>
   </div>
 </section>
+
 
 <!-- Modal Popup -->
 <div class="modal" id="modal">
@@ -117,7 +120,7 @@ if(isset($_POST['add_to_cart'])){
    <div class="box-container">
       <!-- view 2 -->
       <?php  
-         $select_products = mysqli_query($conn, "SELECT * FROM `products` LIMIT 6") or die('query failed');
+         $select_products = mysqli_query($conn, "SELECT * FROM `view_home_products_3`") or die('query failed');
          if(mysqli_num_rows($select_products) > 0){
             while($fetch_products = mysqli_fetch_assoc($select_products)){
       ?>

@@ -43,7 +43,7 @@ if(!isset($user_id)){
    <div class="box-container">
 
       <?php
-         $order_query = mysqli_query($conn, "SELECT * FROM `orders` WHERE user_id = '$user_id'") or die('query failed');
+$order_query = mysqli_query($conn, "SELECT * FROM `view_user_orders_4` WHERE user_id = '$user_id'") or die('query failed');
          if(mysqli_num_rows($order_query) > 0){
             while($fetch_orders = mysqli_fetch_assoc($order_query)){
       ?>
