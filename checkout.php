@@ -41,12 +41,26 @@ if(isset($_POST['order_btn'])){
       if(mysqli_num_rows($order_query) > 0){
          $message[] = 'order already placed!'; 
       }else{
-         mysqli_query($conn, "INSERT INTO `orders`(user_id, name, number, email, method, address, total_products, total_price, placed_on) VALUES('$user_id', '$name', '$number', '$email', '$method', '$address', '$total_products', '$cart_total', '$placed_on')") or die('query failed');
-         $message[] = 'order placed successfully!';
-         mysqli_query($conn, "DELETE FROM `cart` WHERE user_id = '$user_id'") or die('query failed');
+         // stored procedure
+         $call_procedure = "CALL place_order(?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            $stmt = mysqli_prepare($conn, $call_procedure);
+            mysqli_stmt_bind_param($stmt, "issssssds", 
+               $user_id, 
+               $name, 
+               $number, 
+               $email, 
+               $method, 
+               $address, 
+               $total_products, 
+               $cart_total, 
+               $placed_on
+            );
+            mysqli_stmt_execute($stmt) or die('Stored Procedure execution failed');
+            mysqli_stmt_close($stmt);
+   $message[] = 'order placed successfully!';
+   mysqli_query($conn, "DELETE FROM `cart` WHERE user_id = '$user_id'") or die('query failed');
       }
    }
-   
 }
 
 ?>
@@ -132,15 +146,15 @@ if(isset($_POST['order_btn'])){
          </div>
          <div class="inputBox">
             <span>city :</span>
-            <input type="text" name="city" required placeholder="e.g. mumbai">
+            <input type="text" name="city" required placeholder="e.g. surabaya">
          </div>
          <div class="inputBox">
             <span>state :</span>
-            <input type="text" name="state" required placeholder="e.g. maharashtra">
+            <input type="text" name="state" required placeholder="e.g. jawatimur">
          </div>
          <div class="inputBox">
             <span>country :</span>
-            <input type="text" name="country" required placeholder="e.g. india">
+            <input type="text" name="country" required placeholder="e.g. indonesia">
          </div>
          <div class="inputBox">
             <span>pin code :</span>
