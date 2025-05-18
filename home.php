@@ -73,14 +73,14 @@ if(isset($_POST['add_to_cart'])){
 
    <div class="content">
       <h3>Hand Picked Book to your door.</h3>
-      <p>Kesini untuk mencari buku? Dan cobain dehh semua buku nya yaaa.</p>
+      <p>Let's read books for the future, don't waste your time playing.</p>
       <a href="about.php" class="white-btn">discover more</a>
    </div>
 
 </section>
 
 <section class="promo-carousel">
-  <h2 class="section-title">Temukan Buku Favoritmu</h2>
+  <h2 class="section-title">Find Your Favorite Book</h2>
 
   <div class="carousel-container">
     <div class="carousel-track">
@@ -160,7 +160,7 @@ if(isset($_POST['add_to_cart'])){
 
       <div class="content">
          <h3>about us</h3>
-         <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Impedit quos enim minima ipsa dicta officia corporis ratione saepe sed adipisci?</p>
+         <p>we are here to fulfill your literacy needs with a complete and quality book collection. We are committed to providing an easy and enjoyable shopping experience, both offline and online. Join us to explore the world of books and grow a love of reading every day.</p>
          <a href="about.php" class="btn">read more</a>
       </div>
 
@@ -172,7 +172,8 @@ if(isset($_POST['add_to_cart'])){
 
    <div class="content">
       <h3>have any questions?</h3>
-      <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Atque cumque exercitationem repellendus, amet ullam voluptatibus?</p>
+      <p>If you want something exciting, just ask us okay, Ask for more clarity below
+</p>
       <a href="contact.php" class="white-btn">contact us</a>
    </div>
 
