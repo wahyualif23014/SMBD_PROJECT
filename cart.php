@@ -59,33 +59,52 @@ if(isset($_GET['delete_all'])){
    <h1 class="title">products added</h1>
    <!-- view 6 -->
    <div class="box-container">
-      <?php
-         $grand_total = 0;
-         $select_cart = mysqli_query($conn, "SELECT * FROM `cart` WHERE user_id = '$user_id'") or die('query failed');
-         if(mysqli_num_rows($select_cart) > 0){
-            while($fetch_cart = mysqli_fetch_assoc($select_cart)){   
-      ?>
-      <div class="box">
-         <a href="cart.php?delete=<?php echo $fetch_cart['id']; ?>" class="fas fa-times" onclick="return confirm('delete this from cart?');"></a>
-         <img src="uploaded_img/<?php echo $fetch_cart['image']; ?>" alt="">
-         <div class="name"><?php echo $fetch_cart['name']; ?></div>
-         <div class="category"><?php echo $fetch_cart['category']; ?></div>
-         <div class="price">$<?php echo $fetch_cart['price']; ?>/-</div>
-         <form action="" method="post">
-            <input type="hidden" name="cart_id" value="<?php echo $fetch_cart['id']; ?>">
-            <input type="number" min="1" name="cart_quantity" value="<?php echo $fetch_cart['quantity']; ?>">
-            <input type="submit" name="update_cart" value="update" class="option-btn">
-         </form>
-         <div class="sub-total"> sub total : <span>$<?php echo $sub_total = ($fetch_cart['quantity'] * $fetch_cart['price']); ?>/-</span> </div>
-      </div>
-      <?php
-      $grand_total += $sub_total;
-         }
-      }else{
-         echo '<p class="empty">your cart is empty</p>';
-      }
-      ?>
+<?php
+   $grand_total = 0;
+
+   $stmt = $conn->prepare("CALL cart_subtotal_loop(?)");
+   $stmt->bind_param("i", $user_id);
+   $stmt->execute();
+   $result = $stmt->get_result();
+
+   if($result->num_rows > 0){
+      while($fetch_cart = $result->fetch_assoc()){   
+?>
+   <div class="box">
+      <a href="cart.php?delete=<?php echo $fetch_cart['id']; ?>" class="fas fa-times" onclick="return confirm('delete this from cart?');"></a>
+      <img src="uploaded_img/<?php echo $fetch_cart['image']; ?>" alt="">
+      <div class="name"><?php echo $fetch_cart['name']; ?></div>
+      <div class="category"><?php echo $fetch_cart['category']; ?></div>
+      <div class="price">$<?php echo $fetch_cart['price']; ?>/-</div>
+      <form action="" method="post">
+         <input type="hidden" name="cart_id" value="<?php echo $fetch_cart['id']; ?>">
+         <input type="number" min="1" name="cart_quantity" value="<?php echo $fetch_cart['quantity']; ?>">
+         <input type="submit" name="update_cart" value="update" class="option-btn">
+      </form>
+      <div class="sub-total"> sub total : <span>$<?php echo $fetch_cart['sub_total']; ?>/-</span> </div>
    </div>
+<?php
+      $grand_total += $fetch_cart['sub_total'];
+      }
+      $stmt->close();
+      $conn->next_result();
+
+      // Get grand total stored procedure
+   $stmt = $conn->prepare("CALL grand_total_loop(?)");
+      $stmt->bind_param("i", $user_id);
+      $stmt->execute();
+      $result = $stmt->get_result();
+      $row = $result->fetch_assoc();
+      $grand_total = $row['grand_total'];
+      $stmt->close();
+      $conn->next_result();
+   }else{
+      echo '<p class="empty">your cart is empty</p>';
+      $grand_total = 0;
+   }
+?>
+</div>
+
 
    <div style="margin-top: 2rem; text-align:center;">
       <a href="cart.php?delete_all" class="delete-btn <?php echo ($grand_total > 1)?'':'disabled'; ?>" onclick="return confirm('delete all from cart?');">delete all</a>
