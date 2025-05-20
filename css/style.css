@@ -549,19 +549,19 @@ url(https://images.unsplash.com/photo-1536965764833-5971e0abed7c?q=80&w=2070&aut
 /* promosi */
 .promo-carousel {
    position: relative;
-   background: linear-gradient(to right, #2e382e, #4a5656);
+   background: linear-gradient(to right, #2e382e, #698485);
    padding: 5rem 2rem;
    overflow-x: hidden;
 }
 
 .section-title {
    font-size: 4rem;
-   color: var(--light-bg);
+   color: var(--black);
    text-transform: uppercase;
    margin-bottom: 3rem;
    letter-spacing: 2px;
    position: relative;
-   color: #f2f2f2;
+   color: #222;
    margin-bottom: 3rem;
    text-transform: uppercase;
    animation: fadeInDown 1s ease forwards;
@@ -647,8 +647,6 @@ url(https://images.unsplash.com/photo-1536965764833-5971e0abed7c?q=80&w=2070&aut
      transform: translateY(0);
    }
  }
-
- 
  
  /* Section Title */
  .section-title {
@@ -832,7 +830,7 @@ url(https://images.unsplash.com/photo-1536965764833-5971e0abed7c?q=80&w=2070&aut
    position: absolute;
    top: 1rem;
    left: 1rem;
-   background: linear-gradient(135deg, #bec2c2, #3b3c36);
+   background: linear-gradient(135deg, #50c9ce, #3b3c36);
    padding: 0.8rem 1.2rem;
    border-radius: .5rem;
    font-size: 2rem;

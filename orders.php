@@ -43,8 +43,8 @@ if(!isset($user_id)){
          $status_text = ucfirst($status);
    ?>
       <div class="box">
-         <p> Order ID : <span><?php echo $fetch_orders['id']; ?></span> </p>
-         <p> User ID : <span><?php echo $fetch_orders['user_id']; ?></span> </p>
+         <!-- <p> Order ID : <span><?php echo $fetch_orders['id']; ?></span> </p> -->
+         <!-- <p> User ID : <span><?php echo $fetch_orders['user_id']; ?></span> </p> -->
          <p> Placed On : <span><?php echo $fetch_orders['placed_on']; ?></span> </p>
          <p> Name : <span><?php echo $fetch_orders['name']; ?></span> </p>
          <p> Number : <span><?php echo $fetch_orders['number']; ?></span> </p>
