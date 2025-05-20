@@ -35,47 +35,128 @@ if(!isset($admin_id)){
          } else {
             move_uploaded_file($image_tmp_name, $image_folder);
             $message[] = 'product added successfully!';
+            header('Location: admin_products.php');
+            exit;
          }
       }
    }
 
-if(isset($_GET['delete'])){
+   if(isset($_GET['delete'])){
    $delete_id = $_GET['delete'];
-   $delete_image_query = mysqli_query($conn, "SELECT image FROM `products` WHERE id = '$delete_id'") or die('query failed');
-   $fetch_delete_image = mysqli_fetch_assoc($delete_image_query);
-   unlink('uploaded_img/'.$fetch_delete_image['image']);
-   mysqli_query($conn, "DELETE FROM `products` WHERE id = '$delete_id'") or die('query failed');
+
+   // Ambil gambar (pakai prepared statement untuk keamanan)
+   $stmt_img = $conn->prepare("SELECT image FROM products WHERE id = ?");
+   $stmt_img->bind_param("i", $delete_id);
+   $stmt_img->execute();
+   $result = $stmt_img->get_result();
+
+   while($row = $result->fetch_assoc()){
+      $image_path = 'uploaded_img/' . $row['image'];
+      if(file_exists($image_path)){
+         unlink($image_path); // Hapus gambar dari folder
+      }
+   }
+   $stmt_img->close();
+
+   // Panggil prosedur untuk hapus data produk
+   $stmt_del = $conn->prepare("CALL delete_product_by_id(?)");
+   $stmt_del->bind_param("i", $delete_id);
+   $stmt_del->execute();
+   $stmt_del->close();
+
    header('location:admin_products.php');
 }
+
+
 
 if(isset($_POST['update_product'])){
 
    $update_p_id = $_POST['update_p_id'];
-   $update_category = $_POST['update_category'];
+   $category = $_POST['update_category'];
    $update_name = $_POST['update_name'];
    $update_price = $_POST['update_price'];
 
-   mysqli_query($conn, "UPDATE `products` SET name = '$update_name', price = '$update_price', category = '$update_category' WHERE id = '$update_p_id'") or die('query failed');
+   // Cek apakah produk dengan nama & kategori sudah ada (selain produk ini)
+   $check_query = mysqli_prepare($conn, "SELECT * FROM products WHERE name = ? AND category = ? AND id != ?");
+   $check_query->bind_param("ssi", $category, $update_name, $update_p_id);
+   $check_query->execute();
+   $result = $check_query->get_result();
 
-   $update_image = $_FILES['update_image']['name'];
-   $update_image_tmp_name = $_FILES['update_image']['tmp_name'];
-   $update_image_size = $_FILES['update_image']['size'];
-   $update_folder = 'uploaded_img/'.$update_image;
-   $update_old_image = $_POST['update_old_image'];
+   if($result->num_rows > 0){
+      $message[] = 'Product with this name and category already exists';
+   } else {
+      // Panggil stored procedure untuk update
+      $stmt = $conn->prepare("CALL update_product_admin(?, ?, ?, ?)");
+      $stmt->bind_param("issd", $update_p_id,  $category,$update_name, $update_price);
+      $stmt->execute();
+      $stmt->close();
 
-   if(!empty($update_image)){
-      if($update_image_size > 2000000){
-         $message[] = 'image file size is too large';
-      }else{
-         mysqli_query($conn, "UPDATE `products` SET image = '$update_image' WHERE id = '$update_p_id'") or die('query failed');
-         move_uploaded_file($update_image_tmp_name, $update_folder);
-         unlink('uploaded_img/'.$update_old_image);
+      // Cek dan update gambar jika ada
+      $update_image = $_FILES['update_image']['name'];
+      $update_image_tmp_name = $_FILES['update_image']['tmp_name'];
+      $update_image_size = $_FILES['update_image']['size'];
+      $update_folder = 'uploaded_img/'.$update_image;
+      $update_old_image = $_POST['update_old_image'];
+
+      if(!empty($update_image)){
+         if($update_image_size > 2000000){
+            $message[] = 'image file size is too large';
+         }else{
+            $stmt_img = $conn->prepare("UPDATE products SET image = ? WHERE id = ?");
+            $stmt_img->bind_param("si", $update_image, $update_p_id);
+            $stmt_img->execute();
+            $stmt_img->close();
+
+            move_uploaded_file($update_image_tmp_name, $update_folder);
+            unlink('uploaded_img/'.$update_old_image);
+         }
       }
+
+      $_SESSION['message'] = 'Product updated successfully!';
+      header('Location: admin_products.php');
+      exit;
    }
 
    header('location:admin_products.php');
-
 }
+
+// if(isset($_GET['delete'])){
+//    $delete_id = $_GET['delete'];
+//    $delete_image_query = mysqli_query($conn, "SELECT image FROM `products` WHERE id = '$delete_id'") or die('query failed');
+//    $fetch_delete_image = mysqli_fetch_assoc($delete_image_query);
+//    unlink('uploaded_img/'.$fetch_delete_image['image']);
+//    mysqli_query($conn, "DELETE FROM `products` WHERE id = '$delete_id'") or die('query failed');
+//    header('location:admin_products.php');
+// }
+
+// if(isset($_POST['update_product'])){
+
+//    $update_p_id = $_POST['update_p_id'];
+//    $update_category = $_POST['update_category'];
+//    $update_name = $_POST['update_name'];
+//    $update_price = $_POST['update_price'];
+
+//    mysqli_query($conn, "UPDATE `products` SET name = '$update_name', price = '$update_price', category = '$update_category' WHERE id = '$update_p_id'") or die('query failed');
+
+//    $update_image = $_FILES['update_image']['name'];
+//    $update_image_tmp_name = $_FILES['update_image']['tmp_name'];
+//    $update_image_size = $_FILES['update_image']['size'];
+//    $update_folder = 'uploaded_img/'.$update_image;
+//    $update_old_image = $_POST['update_old_image'];
+
+//    if(!empty($update_image)){
+//       if($update_image_size > 2000000){
+//          $message[] = 'image file size is too large';
+//       }else{
+//          mysqli_query($conn, "UPDATE `products` SET image = '$update_image' WHERE id = '$update_p_id'") or die('query failed');
+//          move_uploaded_file($update_image_tmp_name, $update_folder);
+//          unlink('uploaded_img/'.$update_old_image);
+//       }
+//    }
+
+//    header('location:admin_products.php');
+
+// }
 
 ?>
 

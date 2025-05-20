@@ -10,27 +10,35 @@ if(!isset($admin_id)){
    header('location:login.php');
 }
 
-// stored procedure for updating order status
+// stored procedure for updating order status admin
 if(isset($_POST['update_order'])){
-   $order_update_id = $_POST['order_id'];
-   $update_payment = $_POST['update_payment'];
+   $order_id = $_POST['order_id'];
+   $payment_status = $_POST['payment_status'];
 
    $stmt = $conn->prepare("CALL update_order_status(?, ?)");
-   $stmt->bind_param("is", $order_update_id, $update_payment);
-   $stmt->execute();
-   $message[] = 'Payment status has been updated!';
+   $stmt->bind_param("is", $order_id, $payment_status);
+
+   if($stmt->execute()){
+      $message[] = 'Payment status has been updated!';
+   } else {
+      $message[] = 'Failed to update payment status.';
+   }
+
    $stmt->close();
 }
 
 // stored procedure untuk menghapus order di admin
 if(isset($_GET['delete'])){
    $delete_id = $_GET['delete'];
-   $stmt = $conn->prepare("CALL delete_order_by_id(?)");
+
+   $stmt = $conn->prepare("CALL delete_order(?)");
    $stmt->bind_param("i", $delete_id);
    $stmt->execute();
    $stmt->close();
+
    header('location:admin_orders.php');
 }
+
 
 
 ?>
@@ -75,15 +83,16 @@ if(isset($_GET['delete'])){
          <p> total price : <span>$<?php echo $fetch_orders['total_price']; ?>/-</span> </p>
          <p> payment method : <span><?php echo $fetch_orders['method']; ?></span> </p>
          <form action="" method="post">
-            <input type="hidden" name="order_id" value="<?php echo $fetch_orders['order_id']; ?>">
-            <select name="update_payment">
-               <option value="" selected disabled><?php echo $fetch_orders['payment_status']; ?></option>
-               <option value="pending">pending</option>
-               <option value="completed">completed</option>
-            </select>
-            <input type="submit" value="update" name="update_order" class="option-btn">
-            <a href="admin_orders.php?delete=<?php echo $fetch_orders['order_id']; ?>" onclick="return confirm('delete this order?');" class="delete-btn">delete</a>
-         </form>
+         <input type="hidden" name="order_id" value="<?php echo $fetch_orders['order_id']; ?>">
+         <select name="payment_status">
+            <option value="" selected disabled><?php echo $fetch_orders['payment_status']; ?></option>
+            <option value="pending">pending</option>
+            <option value="confirmed">confirmed</option>
+         </select>
+         <input type="submit" value="update" name="update_order" class="option-btn">
+         <a href="admin_orders.php?delete=<?php echo $fetch_orders['order_id']; ?>" onclick="return confirm('delete this order?');" class="delete-btn">delete</a>
+      </form>
+
       </div>
       <?php
          }

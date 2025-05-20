@@ -47,8 +47,8 @@ if(!isset($user_id)){
       <div class="content">
          <h3>why choose us?</h3>
          <p>
-To provide a broader view, buy a book that you think is useful for you.</p>
-         <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Impedit quos enim minima ipsa dicta officia corporis ratione saepe sed adipisci?</p>
+            To provide a broader view, buy a book that you think is useful for you.</p>
+         <p>you choose the future wisely. keep up the enthusiasm for reading books. Books are a window to knowledge</p>
          <a href="contact.php" class="btn">contact us</a>
       </div>
 

@@ -57,7 +57,7 @@ if(!isset($admin_id)){
       <div class="box">
          <?php
             $total_completed = 0;
-            $select_completed = mysqli_query($conn, "SELECT total_price FROM `orders` WHERE payment_status = 'completed'") or die('query failed');
+            $select_completed = mysqli_query($conn, "SELECT total_price FROM `orders` WHERE payment_status = 'confirmed'") or die('query failed');
             if(mysqli_num_rows($select_completed) > 0){
                while($fetch_completed = mysqli_fetch_assoc($select_completed)){
                   $total_price = $fetch_completed['total_price'];
