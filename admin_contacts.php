@@ -49,7 +49,7 @@ if(isset($_GET['delete'])){
       
    ?>
    <div class="box">
-      <p> user id : <span><?php echo $fetch_message['user_id']; ?></span> </p>
+      <!-- <p> user id : <span><?php echo $fetch_message['user_id']; ?></span> </p> -->
       <p> name : <span><?php echo $fetch_message['name']; ?></span> </p>
       <p> number : <span><?php echo $fetch_message['number']; ?></span> </p>
       <p> email : <span><?php echo $fetch_message['email']; ?></span> </p>

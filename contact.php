@@ -1,32 +1,91 @@
 <?php
 
 include 'config.php';
-
 session_start();
 
 $user_id = $_SESSION['user_id'];
 
-if(!isset($user_id)){
+if (!isset($user_id)) {
    header('location:login.php');
 }
 
-if(isset($_POST['send'])){
+if (isset($_POST['send'])) {
+   // Ambil dan bersihkan input
+   $name = trim($_POST['name']);
+   $email = trim($_POST['email']);
+   $number = trim($_POST['number']);
+   $msg = trim($_POST['message']);
 
-   $name = mysqli_real_escape_string($conn, $_POST['name']);
-   $email = mysqli_real_escape_string($conn, $_POST['email']);
-   $number = $_POST['number'];
-   $msg = mysqli_real_escape_string($conn, $_POST['message']);
+   // Inisialisasi array pesan kesalahan
+   $errors = [];
 
-   $select_message = mysqli_query($conn, "SELECT * FROM `message` WHERE name = '$name' AND email = '$email' AND number = '$number' AND message = '$msg'") or die('query failed');
-
-   if(mysqli_num_rows($select_message) > 0){
-      $message[] = 'message sent already!';
-   }else{
-      mysqli_query($conn, "INSERT INTO `message`(user_id, name, email, number, message) VALUES('$user_id', '$name', '$email', '$number', '$msg')") or die('query failed');
-      $message[] = 'message sent successfully!';
+   // Validasi Nama
+   if (empty($name) || strlen($name) < 3 || !preg_match("/^[a-zA-Z\s]+$/", $name)) {
+      $errors[] = 'Name must be at least 3 characters and only contain letters and spaces.';
    }
 
+   // Validasi Email
+   if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+      $errors[] = 'Invalid email address.';
+   }
+
+   // Validasi Nomor
+   if (!preg_match("/^[0-9]{10,12}$/", $number)) {
+      $errors[] = 'Number must be between 10 to 12 digits.';
+   }
+
+   // Validasi Pesan (message)
+   if (empty($msg) || strlen($msg) < 10) {
+      $errors[] = 'Message must be at least 10 characters.';
+   }
+
+   // Jika tidak ada error, lanjutkan proses
+   if (empty($errors)) {
+      $select_message = mysqli_query($conn, "SELECT * FROM `message` WHERE name = '$name' AND email = '$email' AND number = '$number' AND message = '$msg'") or die('Query failed');
+
+      if (mysqli_num_rows($select_message) > 0) {
+         $message[] = 'Message already sent!';
+      } else {
+         mysqli_query($conn, "INSERT INTO `message`(user_id, name, email, number, message) VALUES('$user_id', '$name', '$email', '$number', '$msg')") or die('Insert query failed');
+         $message[] = 'Message sent successfully!';
+      }
+   } else {
+      // Jika ada error, simpan ke variabel pesan
+      foreach ($errors as $error) {
+         $message[] = $error;
+      }
+   }
 }
+
+
+// if (isset($_POST['send'])) {
+//    $name = trim($_POST['name']);
+//    $email = trim($_POST['email']);
+//    $number = trim($_POST['number']);
+//    $msg = trim($_POST['message']);
+
+//    // Validasi dasar
+//    if (strlen($name) < 3 || !preg_match("/^[a-zA-Z\s]+$/", $name)) {
+//       $message[] = 'Invalid name.';
+//    } else if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+//       $message[] = 'Invalid email.';
+//    } else if (!preg_match("/^[0-9]{10,15}$/", $number)) {
+//       $message[] = 'Invalid number.';
+//    } else if (strlen($msg) < 5) {
+//       $message[] = 'Message too short.';
+//    } else {
+//       $stmt = $conn->prepare("CALL insert_message(?, ?, ?, ?, ?)");
+//       $stmt->bind_param("issss", $user_id, $name, $email, $number, $msg);
+//       if ($stmt->execute()) {
+//          $message[] = 'Message sent successfully!';
+//       } else {
+//          $message[] = 'Failed to send message.';
+//       }
+//       $stmt->close();
+//    }
+// }
+
+
 
 ?>
 
