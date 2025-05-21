@@ -11,11 +11,34 @@ if(!isset($user_id)){
 }
 
 if(isset($_POST['update_cart'])){
-   $cart_id = $_POST['cart_id'];
-   $cart_quantity = $_POST['cart_quantity'];
-   mysqli_query($conn, "UPDATE `cart` SET quantity = '$cart_quantity' WHERE id = '$cart_id'") or die('query failed');
-   $message[] = 'cart quantity updated!';
+   $cart_id = mysqli_real_escape_string($conn, $_POST['cart_id']);
+   $cart_quantity = mysqli_real_escape_string($conn, $_POST['cart_quantity']);
+
+   // Ambil quantity lama dari database
+   $check_query = "SELECT quantity FROM cart WHERE id = '$cart_id' LIMIT 1";
+   $check_result = mysqli_query($conn, $check_query);
+
+   if(mysqli_num_rows($check_result) > 0){
+       $row = mysqli_fetch_assoc($check_result);
+       $old_quantity = $row['quantity'];
+
+       // Hanya update jika quantity berubah
+       if($old_quantity != $cart_quantity){
+           $update_query = "UPDATE `cart` SET quantity = '$cart_quantity' WHERE id = '$cart_id'";
+           if(mysqli_query($conn, $update_query)){
+               $message[] = 'Cart quantity updated!';
+           } else {
+               $message[] = 'Failed to update cart: ' . mysqli_error($conn);
+           }
+       } else {
+           $message[] = 'Quantity is unchanged.';
+       }
+   } else {
+       $message[] = 'Cart item not found.';
+   }
 }
+
+
 
 if(isset($_GET['delete'])){
    $delete_id = $_GET['delete'];

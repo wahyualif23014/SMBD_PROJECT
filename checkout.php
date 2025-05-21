@@ -61,23 +61,23 @@ if (isset($_POST['order_btn'])) {
       } else {
          // Panggil stored procedure
          $call_procedure = "CALL place_order(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-$stmt = mysqli_prepare($conn, $call_procedure);
+         $stmt = mysqli_prepare($conn, $call_procedure);
 
-if (!$stmt) {
-   die("Prepare failed: " . mysqli_error($conn));
-}
-mysqli_stmt_bind_param($stmt, "issssssdss",   
-   $user_id,
-   $name,
-   $number,
-   $email,
-   $method,
-   $address,
-   $total_products,
-   $total_price,
-   $placed_on,
-   $payment_status
-);
+         if (!$stmt) {
+            die("Prepare failed: " . mysqli_error($conn));
+         }
+         mysqli_stmt_bind_param($stmt, "issssssdss",   
+            $user_id,
+            $name,
+            $number,
+            $email,
+            $method,
+            $address,
+            $total_products,
+            $total_price,
+            $placed_on,
+            $payment_status
+         );
 
          if (!mysqli_stmt_execute($stmt)) {
             die('Stored Procedure execution failed: ' . mysqli_stmt_error($stmt));
