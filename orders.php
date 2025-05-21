@@ -21,6 +21,7 @@ if(!isset($user_id)){
    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+<canvas id="background-canvas"></canvas>
 
 <?php include 'header.php'; ?>
 

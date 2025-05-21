@@ -66,6 +66,8 @@ if(isset($_POST['add_to_cart'])){
 
 </head>
 <body>
+   <canvas id="background-canvas"></canvas>
+
    
 <?php include 'header.php'; ?>
 

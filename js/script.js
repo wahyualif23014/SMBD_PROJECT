@@ -268,9 +268,98 @@ modal.addEventListener('click', (e) => {
   }
 });
 
-function closeModal() {
-  modal.style.display = 'none';
-  // Resume animasi
-  track.style.animationPlayState = 'running';
+const canvas = document.getElementById('background-canvas');
+const ctx = canvas.getContext('2d');
+
+let width, height;
+function resizeCanvas() {
+  width = canvas.width = window.innerWidth;
+  height = canvas.height = window.innerHeight;
+}
+window.addEventListener('resize', resizeCanvas);
+resizeCanvas();
+
+// Tangkap posisi mouse
+let mouseX = width / 2;
+document.addEventListener('mousemove', e => {
+  mouseX = e.clientX;
+});
+
+// Bintang jatuh
+class Star {
+  constructor() {
+    this.reset();
+  }
+
+  reset() {
+    this.x = Math.random() * width;
+    this.y = Math.random() * -height;
+    this.length = Math.random() * 80 + 50;
+    this.speed = Math.random() * 6 + 4;
+    this.opacity = Math.random() * 0.6 + 0.4;
+    this.angle = Math.PI / 4;
+  }
+
+  update() {
+    this.x += this.speed * Math.cos(this.angle);
+    this.y += this.speed * Math.sin(this.angle);
+    if (this.x > width || this.y > height) this.reset();
+  }
+
+  draw() {
+    ctx.beginPath();
+    ctx.moveTo(this.x, this.y);
+    ctx.lineTo(this.x - this.length * Math.cos(this.angle), this.y - this.length * Math.sin(this.angle));
+    ctx.strokeStyle = `rgba(255, 255, 255, ${this.opacity})`;
+    ctx.lineWidth = 1.5;
+    ctx.stroke();
+  }
 }
 
+// Aurora dengan gelombang horizontal
+function drawAurora(time) {
+  const waveHeight = 50;
+  const waveCount = 3;
+  const offsetX = (mouseX / width - 0.5) * 100; // efek parallax mouse
+
+  for (let i = 0; i < waveCount; i++) {
+    ctx.beginPath();
+    ctx.moveTo(0, height / 2);
+
+    for (let x = 0; x <= width; x += 10) {
+      let y = Math.sin((x + time * 0.1 + i * 100) * 0.01) * waveHeight + height / 2 + i * 20;
+      ctx.lineTo(x, y);
+    }
+
+    let r = Math.sin(time * 0.001 + i) * 127 + 128;
+    let g = Math.sin(time * 0.001 + 2 + i) * 127 + 128;
+    let b = Math.sin(time * 0.001 + 4 + i) * 127 + 128;
+
+    ctx.strokeStyle = `rgba(${r}, ${g}, ${b}, 0.05)`;
+    ctx.lineWidth = 60;
+    ctx.shadowColor = `rgba(${r}, ${g}, ${b}, 0.2)`;
+    ctx.shadowBlur = 30;
+    ctx.stroke();
+  }
+
+  // reset shadow
+  ctx.shadowBlur = 0;
+  ctx.shadowColor = "transparent";
+}
+
+let stars = [];
+for (let i = 0; i < 50; i++) {
+  stars.push(new Star());
+}
+
+function animate(time) {
+  ctx.clearRect(0, 0, width, height);
+  drawAurora(time);
+  for (let star of stars) {
+    star.update();
+    star.draw();
+  }
+  requestAnimationFrame(animate);
+}
+
+animate();

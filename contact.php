@@ -97,7 +97,8 @@ if (isset($_POST['send'])) {
 
 </head>
 <body>
-   
+<canvas id="background-canvas"></canvas>
+
 <?php include 'header.php'; ?>
 
 <div class="heading">

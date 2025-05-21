@@ -66,8 +66,10 @@ if(isset($_POST['add_to_cart'])){
 
 </head>
 <body>
-   
+<canvas id="background-canvas"></canvas>
+
 <?php include 'header.php'; ?>
+<!-- Canvas Background -->
 
 <section class="home">
 
@@ -101,17 +103,6 @@ if(isset($_POST['add_to_cart'])){
     </div>
   </div>
 </section>
-
-
-<!-- Modal Popup -->
-<div class="modal" id="modal">
-  <div class="modal-content">
-    <span id="modal-close">&times;</span>
-    <h3 id="modal-title"></h3>
-  </div>
-</div>
-
-
 
 <section class="products">
 
@@ -155,7 +146,25 @@ if(isset($_POST['add_to_cart'])){
    <div class="flex">
 
       <div class="image">
-         <img src="images/about-img.jpg" alt="">
+         <img src="images/about-img.jpg" alt=""><style>
+            .image {
+               width: 100%;
+               border-radius: 16px;
+               height: auto;
+               border-radius: 1rem;
+               overflow: hidden;
+               position: relative;
+            }
+            .image img {
+               width: 100%;
+               height: 100%;
+               object-fit: cover;
+               transition: transform 0.3s ease;
+            }
+            .image:hover img {
+               transform: scale(1.1);
+            }
+         </style>
       </div>
 
       <div class="content">

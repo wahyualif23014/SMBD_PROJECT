@@ -1,4 +1,22 @@
 @import url('https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600&display=swap');
+html, body {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  background: #0e0e0e; /* memastikan latar belakang gelap */
+
+}
+#background-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  width: 100vw;
+  height: 100vh;
+  background: #0e0e0e;
+  display: block;
+}
 
 :root {
    --purple: #8e44ad;
@@ -39,7 +57,7 @@
 }
 
 *::-webkit-scrollbar-thumb {
-   background-color: var(--purple);
+   background-color: var(--light-color);
 }
 
 html {
@@ -549,19 +567,26 @@ url(https://images.unsplash.com/photo-1536965764833-5971e0abed7c?q=80&w=2070&aut
 /* promosi */
 .promo-carousel {
    position: relative;
-   background: linear-gradient(to right, #2e382e, #698485);
    padding: 5rem 2rem;
    overflow-x: hidden;
 }
-
-.section-title {
-   font-size: 4rem;
-   color: var(--black);
+.promo-carousel .section-title  {
+   font-size: 3rem;
+   color: var(--white);
    text-transform: uppercase;
    margin-bottom: 3rem;
    letter-spacing: 2px;
    position: relative;
-   color: #222;
+   animation: fadeInDown 1s ease forwards;
+}
+
+.section-title {
+   font-size: 4rem;
+   color: var(--white);
+   text-transform: uppercase;
+   margin-bottom: 3rem;
+   letter-spacing: 2px;
+   position: relative;
    margin-bottom: 3rem;
    text-transform: uppercase;
    animation: fadeInDown 1s ease forwards;
@@ -726,7 +751,7 @@ url(https://images.unsplash.com/photo-1536965764833-5971e0abed7c?q=80&w=2070&aut
 
 /* Product Section */
 
-.box-container {
+/* .box-container {
    max-width: 1200px;
    margin: 0 auto;
    display: grid;
@@ -735,19 +760,21 @@ url(https://images.unsplash.com/photo-1536965764833-5971e0abed7c?q=80&w=2070&aut
    align-items: center;
    justify-content: center;
    animation: fadeIn 1.5s ease forwards;
-}
+} */
 .products {
    padding: 5rem 2rem;
-   background: linear-gradient(to bottom, #3b3c36, #2e382e);
+   background: #0e0e0e;
    min-height: 100vh;
    display: flex;
    flex-direction: column;
    align-items: center;
+   position: relative;
+   z-index: 1;
 }
 
 .products .title {
    font-size: 4rem;
-   color: var(--black);
+   color: var(--white);
    text-transform: uppercase;
    margin-bottom: 3rem;
    letter-spacing: 2px;
@@ -763,7 +790,7 @@ url(https://images.unsplash.com/photo-1536965764833-5971e0abed7c?q=80&w=2070&aut
    left: 50%;
    transform: translateX(-50%);
    width: 8rem;
-   height: .3rem;
+   height: .4rem;
    background: #50c9ce;
    border-radius: 10px;
    animation: shimmer 2s infinite linear;
@@ -799,7 +826,7 @@ url(https://images.unsplash.com/photo-1536965764833-5971e0abed7c?q=80&w=2070&aut
 }
 
 .products .box-container .box .image {
-   height: 250px;
+   height: 220px;
    width: 100%;
    object-fit: cover;
    border-radius: 0.8rem;
@@ -813,16 +840,17 @@ url(https://images.unsplash.com/photo-1536965764833-5971e0abed7c?q=80&w=2070&aut
 
 .products .box-container .box .name {
    font-size: 2rem;
-   color: var(--black);
+   color: var(--light-white);
    margin: 1rem 0;
    font-weight: 600;
-   letter-spacing: 1px;
+   letter-spacing: 0.5px;
 }
 .products .box-container .box .category {
    font-size: 1.6rem;  
-   color: var(--black);
+   color: var(--light-white);
    margin-bottom: 1rem;
    font-weight: 500;
+   letter-spacing: 0.3px;
 
 }
 
@@ -833,7 +861,7 @@ url(https://images.unsplash.com/photo-1536965764833-5971e0abed7c?q=80&w=2070&aut
    background: linear-gradient(135deg, #50c9ce, #3b3c36);
    padding: 0.8rem 1.2rem;
    border-radius: .5rem;
-   font-size: 2rem;
+   font-size: 1.6rem;
    color: #fff;
    font-weight: bold;
    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
@@ -844,10 +872,10 @@ url(https://images.unsplash.com/photo-1536965764833-5971e0abed7c?q=80&w=2070&aut
    padding: 1rem;
    border: 1px solid #50c9ce;
    background: transparent;
-   color: #000;
+   color: var(--light-white);
    border-radius: .5rem;
    margin: 1rem 0;
-   font-size: 1.8rem;
+   font-size: 1.6rem;
 }
 
 .products .box-container .box .qty::placeholder {
@@ -882,7 +910,7 @@ url(https://images.unsplash.com/photo-1536965764833-5971e0abed7c?q=80&w=2070&aut
 .empty {
    text-align: center;
    color: #f0f4f8;
-   font-size: 2.4rem;
+   font-size: 2rem;
    margin-top: 3rem;
 }
 
@@ -898,6 +926,16 @@ url(https://images.unsplash.com/photo-1536965764833-5971e0abed7c?q=80&w=2070&aut
    }
 }
 
+@keyframes fadeInDown {
+  0% {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
 @keyframes shimmer {
    0% {
       background-position: -100% 0;
@@ -930,7 +968,10 @@ url(https://images.unsplash.com/photo-1536965764833-5971e0abed7c?q=80&w=2070&aut
 .about .flex .content {
    flex: 1 1 40rem;
    padding: 2rem;
-   background-color: var(--light-bg);
+   background-color: var(--light-color);
+   border-radius: .5rem;
+   box-shadow: var(--box-shadow);
+   
 }
 
 .about .flex .content h3 {
@@ -943,8 +984,9 @@ url(https://images.unsplash.com/photo-1536965764833-5971e0abed7c?q=80&w=2070&aut
    padding: 1rem 0;
    line-height: 2;
    font-size: 1.7rem;
-   color: var(--light-color);
+   color: var(--white);
 }
+
 /* contact */
 .home-contact {
    background-color: var(--black);
@@ -1085,40 +1127,92 @@ url(https://images.unsplash.com/photo-1536965764833-5971e0abed7c?q=80&w=2070&aut
    background-color: var(--white);
 }
 
+/* SECTION KONTAK */
+.contact {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 2rem;
+  background: transparent;
+}
+
 .contact form {
-   margin: 0 auto;
-   background-color: var(--light-bg);
-   border-radius: .5rem;
-   border: var(--border);
-   padding: 2rem;
-   max-width: 50rem;
-   margin: 0 auto;
-   text-align: center;
+  backdrop-filter: blur(15px);
+  background: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  border-radius: 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  padding: 3rem 2rem;
+  max-width: 500px;
+  width: 100%;
+  animation: fadeSlideIn 1s ease forwards;
+  transform: translateY(20px);
+  opacity: 0;
 }
 
 .contact form h3 {
-   font-size: 2.5rem;
-   text-transform: uppercase;
-   margin-bottom: 1rem;
-   color: var(--black);
+  font-size: 3rem;
+  margin-bottom: 1.5rem;
+  color: #fff;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+   text-align: center;
 }
 
-.contact form .box {
-   margin: 1rem 0;
-   width: 100%;
-   border: var(--border);
-   background-color: var(--white);
-   padding: 1.2rem 1.4rem;
-   font-size: 1.8rem;
-   color: var(--black);
-   border-radius: .5rem;
+.contact form .box,
+.contact form textarea {
+  width: 100%;
+  margin: 1rem 0;
+  padding: 1.8rem 1.2rem;
+  border: none;
+  border-radius: 0.5rem;
+  background: rgba(255, 255, 255, 0.15);
+  color: #fff;
+  font-size: 2rem;
+  backdrop-filter: blur(5px);
+  transition: background 0.3s, transform 0.3s;
+}
+
+.contact form .box:focus,
+.contact form textarea:focus {
+  background: rgba(255, 255, 255, 0.25);
+  transform: scale(1.02);
 }
 
 .contact form textarea {
-   height: 20rem;
-   resize: none;
+  height: 150px;
+  resize: none;
 }
+
+.contact form .btn {
+  background: var(--purple);
+  color: #fff;
+  padding: 1rem 2rem;
+  font-size: 1.7rem;
+  border-radius: 0.5rem;
+  margin-top: 1rem;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.3s ease;
+  width: 100%;
+  border: none;
+}
+
+.contact form .btn:hover {
+  background: #6c3483;
+  transform: translateY(-3px);
+}
+
+/* Animasi awal */
+@keyframes fadeSlideIn {
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
 /* container */
+
 .shopping-cart .box-container {
    max-width: 1200px;
    margin: 0 auto;
@@ -1128,49 +1222,80 @@ url(https://images.unsplash.com/photo-1536965764833-5971e0abed7c?q=80&w=2070&aut
    gap: 1.5rem;
    justify-content: center;
 }
+.shopping-cart .title {
+   font-size: 4rem;
+   color: var(--white);
+   text-transform: uppercase;
+   margin-bottom: 3rem;
+   letter-spacing: 2px;
+   position: relative;
+   animation: fadeInDown 1s ease forwards;
+}
 
 .shopping-cart .box-container .box {
    text-align: center;
    padding: 2rem;
-   border-radius: .5rem;
-   background-color: var(--white);
-   box-shadow: var(--box-shadow);
+   border-radius: 1.2rem;
+   background: rgba(255, 255, 255, 0.05);
+   backdrop-filter: blur(10px);
+   -webkit-backdrop-filter: blur(10px);
+   box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+   border: 1px solid rgba(255, 255, 255, 0.1);
    position: relative;
-   border: var(--border);
+   transition: transform 0.3s ease, box-shadow 0.3s ease;
+   animation: fadeIn 0.8s ease;
+}
+
+.shopping-cart .box-container .box:hover {
+   transform: translateY(-6px);
+   box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
 }
 
 .shopping-cart .box-container .box .fa-times {
    position: absolute;
    top: 1rem;
    right: 1rem;
-   height: 4.5rem;
-   width: 4.5rem;
-   line-height: 4.5rem;
+   height: 4rem;
+   width: 4rem;
+   line-height: 4rem;
    font-size: 2rem;
-   background-color: var(--red);
-   color: var(--white);
-   border-radius: .5rem;
+   background: #ff6b6b;
+   color: #fff;
+   border-radius: 0.8rem;
+   transition: background 0.3s ease;
+   text-align: center;
 }
 
 .shopping-cart .box-container .box .fa-times:hover {
-   background-color: var(--black);
+   background: #d63031;
 }
 
 .shopping-cart .box-container .box img {
-   height: 30rem;
+   height: 25rem;
+   border-radius: 1rem;
+   object-fit: cover;
+   margin-bottom: 1rem;
+   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
 
 .shopping-cart .box-container .box .name {
-   padding: 1rem 0;
    font-size: 2rem;
-   color: var(--black);
+   color: #fff;
+   margin: 1rem 0 0.5rem;
+}
+
+.shopping-cart .box-container .box .category {
+   font-size: 1.6rem;
+   color: #bbb;
+   margin-bottom: 0.5rem;
 }
 
 .shopping-cart .box-container .box .price {
-   padding: 1rem 0;
-   font-size: 2.5rem;
-   color: var(--red);
+   font-size: 2.2rem;
+   color: #feca57;
+   margin-bottom: 1rem;
 }
+
 
 .shopping-cart .box-container .box input[type="number"] {
    margin: .5rem 0;
@@ -1191,6 +1316,7 @@ url(https://images.unsplash.com/photo-1536965764833-5971e0abed7c?q=80&w=2070&aut
 .shopping-cart .box-container .box .sub-total span {
    color: var(--red);
 }
+/*  */
 
 .shopping-cart .cart-total {
    max-width: 1200px;
@@ -1224,6 +1350,7 @@ url(https://images.unsplash.com/photo-1536965764833-5971e0abed7c?q=80&w=2070&aut
    opacity: .5;
    user-select: none;
 }
+
 /* display */
 .display-order {
    max-width: 1200px;
@@ -1233,7 +1360,8 @@ url(https://images.unsplash.com/photo-1536965764833-5971e0abed7c?q=80&w=2070&aut
 }
 
 .display-order p {
-   background-color: var(--light-bg);
+   background-color: var(--white);
+   border-radius: 16px;
    color: var(--black);
    font-size: 2rem;
    padding: 1rem 1.5rem;
@@ -1255,20 +1383,27 @@ url(https://images.unsplash.com/photo-1536965764833-5971e0abed7c?q=80&w=2070&aut
 .display-order .grand-total span {
    color: var(--red);
 }
+
 /* checkout */
+.checkout {
+   padding: 2rem;
+   background-color: var(--dark-bg);
+}
+
 .checkout form {
    max-width: 1200px;
    padding: 2rem;
    margin: 0 auto;
    border: var(--border);
-   background-color: var(--light-bg);
+   background-color: var(--dark-card);
    border-radius: .5rem;
+   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }
 
 .checkout form h3 {
    text-align: center;
    margin-bottom: 2rem;
-   color: var(--black);
+   color: var(--white);
    text-transform: uppercase;
    font-size: 3rem;
 }
@@ -1285,7 +1420,7 @@ url(https://images.unsplash.com/photo-1536965764833-5971e0abed7c?q=80&w=2070&aut
 
 .checkout form .flex span {
    font-size: 2rem;
-   color: var(--black);
+   color: var(--light-bg);
 }
 
 .checkout form .flex select,
@@ -1293,50 +1428,107 @@ url(https://images.unsplash.com/photo-1536965764833-5971e0abed7c?q=80&w=2070&aut
    border: var(--border);
    width: 100%;
    border-radius: .5rem;
-   width: 100%;
-   background-color: var(--white);
+   background-color: #3a3a3a;
+   color: var(--light-text);
    padding: 1.2rem 1.4rem;
    font-size: 1.8rem;
    margin: 1rem 0;
 }
 
+.checkout form .flex input::placeholder {
+   color: var(--muted-text);
+}
+
+.checkout form .flex select {
+   appearance: none;
+}
+
+.checkout form .btn {
+   background-color: var(--primary);
+   color: white;
+   padding: 1.2rem;
+   border: none;
+   border-radius: .5rem;
+   font-size: 2rem;
+   width: 100%;
+   margin-top: 2rem;
+   cursor: pointer;
+   transition: background-color 0.3s ease;
+}
+
+.checkout form .btn:hover {
+   background-color: #c0392b;
+}
+/* MY ORDERS */
+.placed-orders .title {
+   font-size: 4rem;
+   color: var(--white);
+   text-transform: uppercase;
+   margin-bottom: 3rem;
+   letter-spacing: 2px;
+   position: relative;
+   animation: fadeInDown 1s ease forwards;
+}
 .placed-orders .box-container {
    max-width: 1200px;
-   margin: 0 auto;
+   margin: 2rem auto;
    display: flex;
    flex-wrap: wrap;
-   align-items: center;
    gap: 1.5rem;
+   justify-content: center;
+   border-radius: 16px;
+   backdrop-filter: blur(10px);
+   padding: 1rem;
 }
 
 .placed-orders .box-container .empty {
-   flex: 1;
+   flex: 1 1 100%;
+   text-align: center;
+   color: var(--light-white);
+   font-size: 1.6rem;
+   padding: 2rem;
 }
 
 .placed-orders .box-container .box {
-   flex: 1 1 40rem;
-   border-radius: .5rem;
+   flex: 1 1 350px;
+   border-radius: 1rem;
    padding: 2rem;
-   border: var(--border);
-   background-color: var(--light-bg);
-   padding: 1rem 2rem;
+   border: 1px solid rgba(255, 255, 255, 0.1);
+   background: rgba(255, 255, 255, 0.05);
+   backdrop-filter: blur(12px);
+   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+   transition: transform 0.3s ease, box-shadow 0.3s ease;
+   color: var(--light-white);
+}
+
+.placed-orders .box-container .box:hover {
+   transform: translateY(-8px) scale(1.02);
+   box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
 }
 
 .placed-orders .box-container .box p {
-   padding: 1rem 0;
-   font-size: 2rem;
-   color: var(--light-color);
+   padding: 0.5rem 0;
+   font-size: 1.5rem;
+   color: var(--light-white);
 }
 
 .placed-orders .box-container .box p span {
    color: var(--purple);
+   font-weight: 500;
 }
 
 /* Search Form Section */
+/* Search Form Section */
 .search-form {
    padding: 4rem 2rem;
-   background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
-   animation: fadeIn 1s ease;
+   background: rgba(255, 255, 255, 0.02);
+   backdrop-filter: blur(10px);
+   -webkit-backdrop-filter: blur(10px);
+   animation: fadeIn 0.8s ease;
+   border-radius: 1.5rem;
+   margin: 2rem auto;
+   max-width: 900px;
+   box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
 }
 
 .search-form form {
@@ -1345,37 +1537,45 @@ url(https://images.unsplash.com/photo-1536965764833-5971e0abed7c?q=80&w=2070&aut
    display: flex;
    gap: 1rem;
    align-items: center;
-   background: #fff;
+   background: rgba(255, 255, 255, 0.05);
+   backdrop-filter: blur(8px);
+   border: 1px solid rgba(255, 255, 255, 0.1);
    padding: 1.5rem 2rem;
    border-radius: 1rem;
-   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-   transition: box-shadow 0.3s ease;
+   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+   transition: box-shadow 0.3s ease, transform 0.3s ease;
 }
 
 .search-form form:hover {
-   box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+   box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+   transform: translateY(-4px);
 }
 
 .search-form form .box {
    flex: 1;
    padding: 1.5rem;
-   border: 1px solid #ddd;
+   border: 1px solid rgba(255, 255, 255, 0.2);
    font-size: 1.8rem;
-   color: #333;
-   background: #f9f9f9;
+   color: #fff;
+   background: rgba(255, 255, 255, 0.05);
    border-radius: .8rem;
    transition: all 0.3s ease;
+   outline: none;
+}
+
+.search-form form .box::placeholder {
+   color: #aaa;
 }
 
 .search-form form .box:focus {
-   background: #fff;
-   border-color: #6c5ce7;
-   box-shadow: 0 0 0 4px rgba(108, 92, 231, 0.2);
+   background: rgba(255, 255, 255, 0.1);
+   border-color: #a29bfe;
+   box-shadow: 0 0 0 4px rgba(162, 155, 254, 0.2);
 }
 
 .search-form form .btn {
-   padding: 1.2rem 2rem;
-   font-size: 1.8rem;
+   padding: 1.2rem 2.4rem;
+   font-size: 1.6rem;
    background: linear-gradient(135deg, #6c5ce7, #a29bfe);
    color: #fff;
    border: none;
@@ -1389,10 +1589,24 @@ url(https://images.unsplash.com/photo-1536965764833-5971e0abed7c?q=80&w=2070&aut
    transform: translateY(-3px);
 }
 
+/* Optional Fade-In Animation */
+@keyframes fadeIn {
+   from {
+      opacity: 0;
+      transform: translateY(20px);
+   }
+   to {
+      opacity: 1;
+      transform: translateY(0);
+   }
+}
+
+
+
 /* Products Section */
 .products {
    padding: 4rem 2rem;
-   background: #f0f4f8;
+   background:  #0e0e0e;;
 }
 
 .products .box-container {
@@ -1469,7 +1683,10 @@ url(https://images.unsplash.com/photo-1536965764833-5971e0abed7c?q=80&w=2070&aut
    text-align: center;
    font-size: 2rem;
    color: #999;
-   padding: 3rem 0;
+   margin-top: 3rem;
+   padding: 2rem;
+   background: rgba(255, 255, 255, 0.1);
+   border-radius: 1rem;
 }
 
 /* Animations */
@@ -1493,9 +1710,9 @@ url(https://images.unsplash.com/photo-1536965764833-5971e0abed7c?q=80&w=2070&aut
 
 /* footer */
 
-.footer {
+/* .footer {
    background-color: var(--light-bg);
-}
+} */
 
 .footer .box-container {
    max-width: 1200px;
@@ -1546,7 +1763,7 @@ url(https://images.unsplash.com/photo-1536965764833-5971e0abed7c?q=80&w=2070&aut
 
 
 
-
+/* navbar header */
 /* media queries  */
 
 @media (max-width:991px) {
@@ -1562,13 +1779,13 @@ url(https://images.unsplash.com/photo-1536965764833-5971e0abed7c?q=80&w=2070&aut
    #menu-btn {
       display: inline-block;
    }
-
+   
    .header .header-2 .flex .navbar {
       position: absolute;
       top: 99%;
       left: 0;
       right: 0;
-      background-color: var(--white);
+      background-color: var(--light-white);
       border-top: var(--border);
       border-bottom: var(--border);
       clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
@@ -1581,7 +1798,9 @@ url(https://images.unsplash.com/photo-1536965764833-5971e0abed7c?q=80&w=2070&aut
    .header .header-2 .flex .navbar a {
       display: block;
       font-size: 2.5rem;
+      color: var(--black);
       margin: 2rem;
+      
    }
 
    .home .content h3 {

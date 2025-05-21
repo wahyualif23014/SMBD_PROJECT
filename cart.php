@@ -69,6 +69,8 @@ if(isset($_GET['delete_all'])){
 
 </head>
 <body>
+   <canvas id="background-canvas"></canvas>
+
    
 <?php include 'header.php'; ?>
 

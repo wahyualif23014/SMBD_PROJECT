@@ -30,6 +30,7 @@ if(!isset($user_id)){
 <body>
    
 <?php include 'header.php'; ?>
+<canvas id="background-canvas"></canvas>
 
 <div class="heading">
    <h3>about us</h3>
