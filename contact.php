@@ -10,36 +10,29 @@ if (!isset($user_id)) {
 }
 
 if (isset($_POST['send'])) {
-   // Ambil dan bersihkan input
    $name = trim($_POST['name']);
    $email = trim($_POST['email']);
    $number = trim($_POST['number']);
    $msg = trim($_POST['message']);
 
-   // Inisialisasi array pesan kesalahan
    $errors = [];
 
-   // Validasi Nama
    if (empty($name) || strlen($name) < 3 || !preg_match("/^[a-zA-Z\s]+$/", $name)) {
       $errors[] = 'Name must be at least 3 characters and only contain letters and spaces.';
    }
 
-   // Validasi Email
    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
       $errors[] = 'Invalid email address.';
    }
 
-   // Validasi Nomor
    if (!preg_match("/^[0-9]{10,12}$/", $number)) {
       $errors[] = 'Number must be between 10 to 12 digits.';
    }
 
-   // Validasi Pesan (message)
    if (empty($msg) || strlen($msg) < 10) {
       $errors[] = 'Message must be at least 10 characters.';
    }
 
-   // Jika tidak ada error, lanjutkan proses
    if (empty($errors)) {
       $select_message = mysqli_query($conn, "SELECT * FROM `message` WHERE name = '$name' AND email = '$email' AND number = '$number' AND message = '$msg'") or die('Query failed');
 
@@ -50,7 +43,6 @@ if (isset($_POST['send'])) {
          $message[] = 'Message sent successfully!';
       }
    } else {
-      // Jika ada error, simpan ke variabel pesan
       foreach ($errors as $error) {
          $message[] = $error;
       }
