@@ -348,6 +348,11 @@ section {
    font-size: 2.5rem;
    color: var(--red);
 }
+.show-products .box-container .box .category {
+   padding: 1rem 0;
+   font-size: 1.9rem;
+   color: var(--black);
+}
 
 .edit-product-form {
    min-height: 100vh;
