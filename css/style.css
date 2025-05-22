@@ -1724,7 +1724,7 @@ url(https://images.unsplash.com/photo-1536965764833-5971e0abed7c?q=80&w=2070&aut
 
 .footer .box-container .box h3 {
    text-transform: uppercase;
-   color: var(--black);
+   color: var(--light-white);
    font-size: 2rem;
    padding-bottom: 2rem;
 }
